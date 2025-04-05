@@ -1,31 +1,16 @@
 // importing express from node_modules
 const express = require("express");
+const adminAuth = require("./middlewares/adminAuth");
 
 // creating an instance of express
 const app = express();
-
+app.use("/admin", adminAuth);
 // listen to incoming request by running web server on port
 const port = 8000;
 
-app.get(
-  "/",
-  (req, res, next) => {
-    console.log("Hello World 1");
-    next();
-  },
-  (req, res, next) => {
-    console.log("Hello World 2");
-    next();
-  },
-  (req, res, next) => {
-    console.log("Hello World 3");
-    next();
-  },
-  (req, res, next) => {
-    console.log("Hello World 4");
-    next();
-  }
-);
+app.delete("/admin/delete", (req, res) => {
+  res.send("User Deleted");
+});
 
 app.listen(port, () => {
   console.log(`Server is Running on port ${port}`);
