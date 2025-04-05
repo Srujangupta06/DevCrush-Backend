@@ -7,14 +7,25 @@ const app = express();
 // listen to incoming request by running web server on port
 const port = 8000;
 
-app.use("/", (req, res) => {
-  res.send("Hello from Home Page");
-});
-
-app.use("/about", (req, res) => {
-    res.send("Hello from About Page");
-});
-  
+app.get(
+  "/",
+  (req, res, next) => {
+    console.log("Hello World 1");
+    next();
+  },
+  (req, res, next) => {
+    console.log("Hello World 2");
+    next();
+  },
+  (req, res, next) => {
+    console.log("Hello World 3");
+    next();
+  },
+  (req, res, next) => {
+    console.log("Hello World 4");
+    next();
+  }
+);
 
 app.listen(port, () => {
   console.log(`Server is Running on port ${port}`);
