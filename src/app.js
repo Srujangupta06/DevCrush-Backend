@@ -73,7 +73,7 @@ app.patch("/update-user", async (req, res) => {
   const userId = req.body.userId;
   try {
     const updatedUser = await User.findByIdAndUpdate(userId, data, {
-      returnDocument: "after",
+      runValidators: true,
     });
     res.send("User Updated Successfully");
   } catch (err) {
@@ -82,7 +82,22 @@ app.patch("/update-user", async (req, res) => {
   }
 });
 
-// Update the user by Email id 
+// Update the user by Email id
+app.patch("/update-user-by-email", async (req, res) => {
+  const { firstName, lastName, email, newEmail } = req.body;
+  const data = {
+    firstName,
+    lastName,
+    email: newEmail,
+  };
+  try {
+    const updatedUser = await User.findOneAndUpdate({ email }, data);
+    res.send(updatedUser);
+  } catch (err) {
+    console.log(err);
+    res.send(err);
+  }
+});
 
 initializeDB()
   .then(() => {

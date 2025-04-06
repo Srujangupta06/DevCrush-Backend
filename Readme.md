@@ -28,3 +28,8 @@ If Sorted then it give first Document
 Else,
 
 it searches for first document (of two documents) which is inserted first in its internal Storage..
+
+
+# Data Validation & Sanitization
+
+validate -> function only run for newly inserted documents not when we want to update
