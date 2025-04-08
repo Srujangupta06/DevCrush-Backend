@@ -33,3 +33,20 @@ it searches for first document (of two documents) which is inserted first in its
 # Data Validation & Sanitization
 
 validate -> function only run for newly inserted documents not when we want to update
+
+
+
+
+
+# validator package
+
+
+# Password Encryption
+
+npm i  bcrypt
+
+brcypt.hash(plaintext,salt Rounds)
+bcrypt.compare(incomingtext,hashedText)
+
+# Authentication
+
