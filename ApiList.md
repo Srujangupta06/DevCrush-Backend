@@ -15,8 +15,8 @@ Profile Router
 Connection Request Router
  Status: ignore,interested,accepted,rejected
  # Send Connections
- -POST/request/send/interested/:userId
- -POST/request/send/ignore/:userId
+ -POST/request/send/:status/:userId         // Status is dynamic
+ 
  # Review Connections
  -POST/request/review/accepted/:requestId
  -POST/request/review/rejected/:requestId

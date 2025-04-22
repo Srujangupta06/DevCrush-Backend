@@ -17,10 +17,9 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true, trim: true, minLength: 8 },
     gender: {
       type: String,
-      validate(value) {
-        if (!["male", "female", "other"].includes(value)) {
-          throw new Error("Gender is not Valid");
-        }
+      enum: {
+        values: ["male", "female", "others"],
+        message: `{VALUE} is not a Valid Gender Type`,
       },
     },
     age: { type: Number, min: 18 },
@@ -37,6 +36,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+
 userSchema.methods.getJWT = async function () {
   const user = this;
   const token = jwt.sign({ _id: user._id }, "DEV@TINDER2024", {
@@ -48,7 +48,10 @@ userSchema.methods.getJWT = async function () {
 userSchema.methods.validatePassword = async function (incomingPassword) {
   const user = this;
   const hashedPassword = user.password;
-  const isPasswordValid = await bcrypt.compare(incomingPassword, hashedPassword);
+  const isPasswordValid = await bcrypt.compare(
+    incomingPassword,
+    hashedPassword
+  );
   return isPasswordValid;
 };
 // Create a Model

@@ -42,7 +42,7 @@ authRouter.post("/login", async (req, res) => {
       throw new Error("Invalid Credentials");
     } else {
       // Check the Password
-      const isPasswordValid = user.validatePassword(password);
+      const isPasswordValid = await bcrypt.compare(password, user.password);
       if (isPasswordValid) {
         // Create a Jwt Token
         const token = await user.getJWT();
