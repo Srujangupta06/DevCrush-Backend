@@ -15,11 +15,11 @@ Profile Router
 Connection Request Router
  Status: ignore,interested,accepted,rejected
  # Send Connections
- -POST/request/send/:status/:userId         // Status is dynamic
+ -POST/request/send/:status/:userId         // Status is dynamic    [interested,ignored]
  
- # Review Connections
- -POST/request/review/accepted/:requestId
- -POST/request/review/rejected/:requestId
+ # Review Connections           
+ -POST/request/review/:status/:requestId        // Status is dynamic [accepted,rejected]
+
 
 User Router
  -GET/user/connections

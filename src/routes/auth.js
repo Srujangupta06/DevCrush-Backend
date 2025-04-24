@@ -1,6 +1,6 @@
 const express = require("express");
 const authRouter = express.Router();
-const {validateSignUp} = require("../utils/validation");
+const { validateSignUp } = require("../utils/validation");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 authRouter.post("/signup", async (req, res) => {
@@ -54,7 +54,7 @@ authRouter.post("/login", async (req, res) => {
 
           { expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7) }
         );
-        res.send("Login Successfull");
+        res.json({ data: user });
       } else {
         res.send("Invalid Credentials");
       }
