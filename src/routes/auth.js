@@ -39,7 +39,7 @@ authRouter.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw new Error("Invalid Credentials");
+      return res.status(400).json({ message: "Invalid Credentials" });
     } else {
       // Check the Password
       const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -56,11 +56,11 @@ authRouter.post("/login", async (req, res) => {
         );
         res.json({ data: user });
       } else {
-        res.send("Invalid Credentials");
+        return res.status(400).json({ message: "Invalid Credentials" });
       }
     }
   } catch (err) {
-    res.status(400).send("ERROR: " + err.message);
+    res.status(400).json({ message: err.message });
   }
 });
 
@@ -68,6 +68,6 @@ authRouter.post("/logout", async (req, res) => {
   res.cookie("token", null, {
     expires: new Date(Date.now()),
   });
-  res.send("Logout Successfull");
+  res.json({ message: "Logout Successfull" });
 });
 module.exports = authRouter;

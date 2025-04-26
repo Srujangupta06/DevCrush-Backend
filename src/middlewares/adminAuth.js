@@ -7,14 +7,14 @@ const auth = async (req, res, next) => {
     const { token } = cookie;
     // Validate the token
     if (!token) {
-      throw new Error("Unauthorized User");
+      return res.status(401).json({ message: "Unauthorized User" });
     }
     const isTokenValid = await jwt.verify(token, "DEV@TINDER2024");
     const { _id } = isTokenValid;
     // Find the User if Exists
     const user = await User.findById(_id);
     if (!user) {
-      throw new Error("User Not Found");
+      res.status(404).json({ message: "User Not Found" });
     }
     req.user = user;
     next();

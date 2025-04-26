@@ -1,0 +1,11 @@
+const CLOUD_NAME = "djv3sgbxn";
+
+const CLOUDINARY_API_KEY = "137153662241269";
+
+const CLOUDINARY_API_SECRET = "3MSxSoHrdbZczJFs8X3t_8WQlMo";
+
+module.exports = {
+  CLOUD_NAME,
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
+};

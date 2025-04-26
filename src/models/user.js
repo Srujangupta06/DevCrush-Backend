@@ -25,8 +25,7 @@ const userSchema = new mongoose.Schema(
     age: { type: Number, min: 18 },
     avatar: {
       type: String,
-      default:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCpY5LtQ47cqncKMYWucFP41NtJvXU06-tnQ&s",
+      default: "",
     },
     bio: { type: String, default: "Default Bio of User", trim: true },
     skills: {
@@ -35,7 +34,6 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
 
 userSchema.methods.getJWT = async function () {
   const user = this;

@@ -4,6 +4,20 @@ const { auth } = require("../middlewares/adminAuth");
 const { validateMyProfileEditData } = require("../utils/validation");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const upload = require("../middlewares/multer");
+const cloudinary = require("../config/cloudinary");
+const fs = require("fs");
+const uploadByCloudinary = async (filepath) => {
+  try {
+    const result = await cloudinary.uploader.upload(filepath, {
+      folder: "DevCrush",
+    });
+    return result.secure_url;
+  } catch (err) {
+    throw new Error("Cloudinary Upload Error: " + err.message);
+  }
+};
+
 profileRouter.get("/view", auth, async (req, res) => {
   try {
     const user = req.user;
@@ -13,22 +27,37 @@ profileRouter.get("/view", auth, async (req, res) => {
   }
 });
 
-profileRouter.patch("/edit", auth, async (req, res) => {
-  try {
-    if (!validateMyProfileEditData(req)) {
-      throw new Error("Invalid Edit Request");
+profileRouter.patch(
+  "/edit",
+  auth,
+  upload.single("avatar"),
+  async (req, res) => {
+    try {
+      const loggedInUser = req.user;
+      const file = req.file;
+      if (!validateMyProfileEditData(req)) {
+        throw new Error("Invalid Edit Request");
+      }
+      if (file) {
+        const profileImgUrl = await uploadByCloudinary(file.path);
+        loggedInUser.avatar = profileImgUrl;
+        fs.unlinkSync(req.file.path);
+      }
+
+      Object.keys(req.body).forEach(
+        (key) => (loggedInUser[key] = req.body[key])
+      );
+
+      await loggedInUser.save();
+      res.json({
+        message: `${loggedInUser.firstName}, your Profile Updated Successfully`,
+        updatedData: loggedInUser,
+      });
+    } catch (err) {
+      res.status(400).send({ message: err.message });
     }
-    const loggedInUser = req.user;
-    Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]));
-    await loggedInUser.save();
-    res.json({
-      message: `${loggedInUser.firstName}, your Profile Updated Successfully`,
-      updatedData: loggedInUser,
-    });
-  } catch (err) {
-    res.status(400).send({ message: err.message });
   }
-});
+);
 
 profileRouter.patch("/forgot-password", auth, async (req, res) => {
   try {
