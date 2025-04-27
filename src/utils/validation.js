@@ -2,7 +2,7 @@ const validator = require("validator");
 
 const validateSignUp = (req) => {
   const { firstName, lastName, email, password } = req.body;
-  if (!firstName || !lastName) {
+  if (!firstName ) {
     throw new Error("Name is Required");
   } else if (!validator.isEmail(email)) {
     throw new Error("Email is Invalid");

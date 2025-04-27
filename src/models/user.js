@@ -21,11 +21,13 @@ const userSchema = new mongoose.Schema(
         values: ["male", "female", "others"],
         message: `{VALUE} is not a Valid Gender Type`,
       },
+      default: "male",
     },
-    age: { type: Number, min: 18 },
+    age: { type: Number, min: 18, default: 18 },
     avatar: {
       type: String,
-      default: "",
+      default:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCpY5LtQ47cqncKMYWucFP41NtJvXU06-tnQ&s",
     },
     bio: { type: String, default: "Default Bio of User", trim: true },
     skills: {

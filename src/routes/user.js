@@ -28,8 +28,8 @@ userRouter.get("/connections", auth, async (req, res) => {
         { toUserId: loggedInUser._id, status: "accepted" },
       ],
     })
-      .populate("fromUserId", "firstName lastName avatar gender bio skills")
-      .populate("toUserId", "firstName lastName avatar gender bio skills");
+      .populate("fromUserId", "firstName lastName avatar gender bio skills age")
+      .populate("toUserId", "firstName lastName avatar gender bio skills age");
     const data = connectionRequests.map((eachUser) => {
       if (eachUser.fromUserId._id.toString() === loggedInUser._id.toString()) {
         return eachUser.toUserId;
