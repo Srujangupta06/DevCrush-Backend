@@ -9,7 +9,7 @@ const auth = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ message: "Unauthorized User" });
     }
-    const isTokenValid = await jwt.verify(token, "DEV@TINDER2024");
+    const isTokenValid = await jwt.verify(token, process.env.JWT_SECRET_KEY);
     const { _id } = isTokenValid;
     // Find the User if Exists
     const user = await User.findById(_id);

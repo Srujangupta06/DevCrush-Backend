@@ -65,8 +65,15 @@ server_name example.com; # Change to your domain or public IP
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
     }
- - save(Ctrl+O) and Exit (Ctrl+X)
 
- -sudo systemctl restart nginx
+- save(Ctrl+O) and Exit (Ctrl+X)
 
- - Modify the  Base url in frontend project to --> /api
+-sudo systemctl restart nginx
+
+- Modify the Base url in frontend project to --> /api
+
+# .env for security of Keys
+
+- added a dotenv package
+
+- created a .env file containg all secret-information
